@@ -7,13 +7,18 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: $gray-4 !important;
-
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
-
+a {
+  text-decoration: none;
+}
+.list{
+  margin-left: 100px;
+  margin-right: 100px;
+}
 .flex-grid {
   display: flex;
   justify-content: center;

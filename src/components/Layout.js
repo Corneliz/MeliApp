@@ -15,8 +15,8 @@ class Layout extends React.Component {
         return (
             <div>
                 <Nav filterUser={this.props.filterUser} search={this.props.search} />
-                {this.props.items !== undefined &&
-                    <List filterUser={this.props.filterUser} items={this.props.items} />
+                {this.props.id === undefined &&
+                    <List filterUser={this.props.filterUser} items={this.props.items} search={this.props.search}/>
                 }
                 {this.props.id !== undefined &&
                     <Detail id={this.props.id} detail={this.props.detail} />

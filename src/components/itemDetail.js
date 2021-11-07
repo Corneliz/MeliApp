@@ -4,30 +4,20 @@ class Detail extends React.Component {
     constructor(props) {
         super(props);
         this.handler = this.handler.bind(this);
-        this.state = { detail: '', description: '' };
+        this.state = { detail: '', description: '', price: '' };
+    }
+    componentDidMount() {
         this.getItemById();
     }
     handler(e) {
         e.preventDefault();
     }
     getItemById() {
-        const url = 'https://api.mercadolibre.com/items/' + this.props.id + '';
-        console.log(url);
+        const url = 'http://localhost:8080/api/items/' + this.props.id + '';
         fetch(url)
             .then(res => res.json())
             .then((data) => {
-                this.setState({ detail: data })
-                this.getItemDescription();
-            })
-            .catch(console.log);
-    }
-    getItemDescription() {
-        const url = ' https://api.mercadolibre.com/items/' + this.props.id + '/description';
-        console.log(url);
-        fetch(url)
-            .then(res => res.json())
-            .then((data) => {
-                this.setState({ description: data })
+                this.setState({ detail: data.results.item, price: data.results.item.price })
             })
             .catch(console.log);
     }
@@ -35,8 +25,7 @@ class Detail extends React.Component {
         return <div className="itemDetail">
             <div className="flex-grid space-around">
                 <div className="col thumbnail">
-                    {this.state.detail.pictures !== undefined &&
-                        <img src={this.state.detail.pictures[0].secure_url} alt="thumbnail" />}
+                    <img src={this.state.detail.picture} alt="thumbnail" />
                 </div>
                 <div className="col detail">
                     <span className="detail-status">
@@ -45,7 +34,7 @@ class Detail extends React.Component {
                         }
                         <span>{this.state.detail.sold_quantity} vendidos</span></span>
                     <span className="card-title">{this.state.detail.title}</span>
-                    <span className="price">${this.state.detail.price} </span>
+                    <span className="price"> {this.state.price.currency === 'ARS' && <span>$</span>}{this.state.price.amount} </span>
                     <div className="buy">
                         <button className="btn primary">Comprar</button>
                     </div>
@@ -54,7 +43,7 @@ class Detail extends React.Component {
             <div className="flex-grid justify-start">
                 <div className="col description">
                     <h4>Descripción del producto</h4>
-                    <p>{this.state.description.plain_text}</p>
+                    <p>{this.state.detail.description}</p>
                 </div>
             </div>
         </div>

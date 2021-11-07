@@ -15,24 +15,23 @@ class Nav extends React.Component {
         this.searchItems(e);
     }
     searchItems(e) {
-        const url = 'https://api.mercadolibre.com/sites/MLA/search?q=' + e.target[0].value + '';
-        console.log(url);
-        fetch(url, {
-            paging: {
-                _limit: 4
-            }
-        })
-            .then(res => res.json())
-            .then((data) => {
-                this.props.filterUser(data.results, e.target[0].value);
-                this.props.history.push('/items?search=' + e.target[0].value + '');
-
-            })
-            .catch(console.log);
+        this.props.filterUser([], e.target[0].value);
+        this.props.history.push({
+            pathname: '/items',
+            search: '?search=' + e.target[0].value + '',
+            state: { search: e.target[0].value },
+        });
+        if (this.props.history.action === 'PUSH') {
+            window.location.reload(false);
+        }
     }
     keepSearch() {
-        if (this.props.search !== '') {
-            this.searchBoxRef.current = this.props.search;
+        if (this.props.search !== undefined) {
+            this.searchBoxRef.current = this.props.search.replace("?search=", '');
+        } else if (this.props.location.search !== '') {
+            let search = this.props.location.search;
+            search.replace("?search=", '');
+            this.searchBoxRef.current = search;
         }
     }
 
