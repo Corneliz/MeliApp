@@ -21,14 +21,13 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
-
+      <div className="main">
         <BrowserRouter>
           <Switch>
             <Route exact path="/" >
               <Nav filterUser={this.filterUser} />
             </Route>
-            <Route exact path="/items">
+            <Route exact path="/items?search=">
               <Layout filterUser={this.filterUser} items={this.state.items} search={this.state.search} />
             </Route>
             <Route exact path="/items/:id" render={(props) => <Layout filterUser={this.filterUser} id={props.match.params.id} search={this.state.search}/> } />

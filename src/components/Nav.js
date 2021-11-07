@@ -32,7 +32,7 @@ class Nav extends React.Component {
     }
     keepSearch() {
         if (this.props.search !== '') {
-            this.searchBoxRef = this.props.search;
+            this.searchBoxRef.current = this.props.search;
         }
     }
 
